@@ -1,0 +1,8 @@
+Difference between BPE and SentencePiece?
+
+Core Architecture DifferencesHandling of Whitespace: BPE requires pre-tokenized text. 
+It splits sentences into words using spaces first, then builds subwords. SentencePiece treats the entire input string as a raw byte/character stream. 
+It replaces spaces with a special meta-symbol (like _) and tokenizes directly.Vocabulary Initialization: BPE begins its vocabulary construction with a base character set extracted purely from the dataset text. 
+SentencePiece initializes its base vocabulary using a pre-determined model structure, typically using Unigram language modeling or BPE over raw bytes.Out-of-Vocabulary (OOV) Protection: BPE can fail or throw OOV errors if it encounters completely unseen characters in new test data. 
+SentencePiece completely eliminates OOV errors by falling back to byte-level tokenization for unknown symbols.
+Technical Specification MatrixMetric / AttributeBPE LayoutSentencePiece LayoutInput Pre-requisiteRequires explicit space-based pre-tokenizationWorks on raw strings directlyLanguage AdaptabilityPoor for non-spaced languages (e.g., Chinese, Japanese)Universal across all global languagesWhitespace PreservationDrops original formatting spacing structuresPreserves exact spacing via meta-tokensDe-tokenizationLossy (cannot perfectly reconstruct exact raw input)Lossless (perfectly reversible back to raw input)
